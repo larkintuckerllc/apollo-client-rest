@@ -1,6 +1,15 @@
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloClient } from 'apollo-client';
+import { RestLink } from 'apollo-link-rest';
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+
+const restLink = new RestLink({ uri: "https://swapi.co/api/" });
+const client = new ApolloClient({
+  link: restLink,
+  cache: new InMemoryCache(),
+});
 
 class App extends Component {
   render() {
