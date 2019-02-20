@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { ApolloProvider } from 'react-apollo';
 import logo from './logo.svg';
 import './App.css';
+import AddTodo from './components/AddTodo';
 import Todos from './components/Todos';
 
 const URI = 'https://jsonplaceholder.typicode.com/';
@@ -14,10 +15,6 @@ const client = new ApolloClient({
   link: restLink,
   cache: new InMemoryCache(),
 });
-
-/*
-
-*/
 
 class App extends Component {
   render() {
@@ -37,6 +34,7 @@ class App extends Component {
             >
               Learn React
             </a>
+            <AddTodo />
             <Todos />
           </header>
         </div>
