@@ -1,6 +1,11 @@
 import React, { ChangeEvent, FormEvent, PureComponent } from 'react';
 
-class AddTodo extends PureComponent {
+// TODO: FIX TYPING
+interface Props {
+  addTodo: any;
+}
+
+class AddTodo extends PureComponent<Props> {
   public state = {
     title: '',
   };
@@ -21,9 +26,11 @@ class AddTodo extends PureComponent {
   }
 
   private handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const { addTodo } = this.props;
     const { title } = this.state;
     e.preventDefault();
-    console.log(title);
+    // ASYNC
+    addTodo({ variables: { input: { title } } });
     this.setState({ title: '' });
   };
 }
