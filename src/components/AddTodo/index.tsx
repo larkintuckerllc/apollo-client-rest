@@ -41,15 +41,12 @@ const AddTodo = () => (
       if (data === undefined) {
         return;
       }
-      console.log('UPDATE');
       const todosData = cache.readQuery<TodosData>({ query: GET_TODOS });
       if (todosData === null) {
         return;
       }
       const { todos } = todosData;
       const { addTodo } = data;
-      console.log(todos);
-      console.log(addTodo);
       cache.writeQuery({
         query: GET_TODOS,
         data: { todos: [...todos, addTodo] },
