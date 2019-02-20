@@ -12,6 +12,7 @@ const GET_TODOS = gql`
   }
 `;
 
+// TODO: CENTRALIZE
 interface Todo {
   id: number;
   title: string;

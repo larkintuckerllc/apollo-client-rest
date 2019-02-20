@@ -1,8 +1,11 @@
 import React, { ChangeEvent, FormEvent, PureComponent } from 'react';
+import { MutationFn } from 'react-apollo';
+import { AddTodoData, AddTodoInput } from '../AddTodo';
 
-// TODO: FIX TYPING
 interface Props {
-  addTodo: any;
+  addTodo: MutationFn<AddTodoData, AddTodoInput>;
+  error: boolean;
+  loading: boolean;
 }
 
 class AddTodo extends PureComponent<Props> {
@@ -11,11 +14,22 @@ class AddTodo extends PureComponent<Props> {
   };
 
   public render() {
+    const { error, loading } = this.props;
     const { title } = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
-        <input onChange={this.handleChange} value={title} />
-        <button type="submit">Add</button>
+        <input
+          disabled={loading}
+          onChange={this.handleChange}
+          value={title}
+        />
+        <button
+          disabled={loading}
+          type="submit"
+        >
+          Add
+        </button>
+        {error && <div>Add Failed!</div>}
       </form>
     );
   }
@@ -25,13 +39,15 @@ class AddTodo extends PureComponent<Props> {
     this.setState({ title });
   }
 
-  private handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  private handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     const { addTodo } = this.props;
     const { title } = this.state;
     e.preventDefault();
-    // ASYNC
-    addTodo({ variables: { input: { title } } });
-    this.setState({ title: '' });
+    try {
+      await addTodo({ variables: { title } });
+      this.setState({ title: '' });
+    } catch (e) {
+    }
   };
 }
 

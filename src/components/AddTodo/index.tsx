@@ -3,10 +3,11 @@ import React from 'react';
 import { Mutation } from "react-apollo";
 import AddTodoForm from './AddTodoForm';
 
-// TYPING
 const ADD_TODO = gql`
-  mutation addTodo($input: AddTodoInput!) {
-    addTodo(input: $input)
+  mutation addTodo($title: String!) {
+    addTodo(input: {
+      title: $title,
+    })
     @rest(
       method: "POST",
       path: "todos/",
@@ -18,13 +19,46 @@ const ADD_TODO = gql`
   }
 `;
 
-// TYPING
+interface Todo {
+  id: number;
+  title: string;
+}
+export interface AddTodoData {
+  addTodo: Todo;
+}
+
+export interface AddTodoInput {
+  title: String;
+}
+
+class AddTodoMutation extends Mutation<AddTodoData, AddTodoInput> {};
+
 const AddTodo = () => (
-  <Mutation mutation={ADD_TODO}>
-    {(addTodo, { data }) => {
-      return <AddTodoForm addTodo={addTodo} />
+  <AddTodoMutation
+    mutation={ADD_TODO}
+    update={(cache, { data }) => {
+      console.log('UPDATE');
+      console.log(data);
+      /*
+      const { todos } = cache.readQuery({ query: GET_TODOS });
+      cache.writeQuery({
+        query: GET_TODOS,
+        data: { todos: todos.concat([addTodo]) },
+      });
+      */
     }}
-  </Mutation>
+  >
+    {(addTodo, { data, error, loading }) => {
+      console.log(data);
+      return (
+        <AddTodoForm
+          addTodo={addTodo}
+          error={error !== undefined}
+          loading={loading}
+        />
+      );
+    }}
+  </AddTodoMutation>
 );
 
 export default AddTodo;
