@@ -1,8 +1,12 @@
 import React, { PureComponent } from 'react';
-import { QueryResult } from 'react-apollo';
 import { TodosData } from '../../apis/todos';
 
-class TodosView extends PureComponent<QueryResult<TodosData>> {
+interface Props {
+  data?: TodosData;
+  error: boolean;
+  loading: boolean;
+}
+class TodosView extends PureComponent<Props> {
   public render() {
     const { error, loading, data } = this.props;
     if (loading) {
