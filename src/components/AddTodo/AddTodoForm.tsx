@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, PureComponent } from 'react';
 import { MutationFn } from 'react-apollo';
-import { AddTodoData, AddTodoInput } from '../AddTodo';
+import { AddTodoData, AddTodoInput } from '../../apis/todos';
 
 interface Props {
   addTodo: MutationFn<AddTodoData, AddTodoInput>;

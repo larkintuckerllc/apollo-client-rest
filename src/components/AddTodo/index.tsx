@@ -1,36 +1,13 @@
-import gql from "graphql-tag";
 import React from 'react';
 import { Mutation } from "react-apollo";
 import AddTodoForm from './AddTodoForm';
-import { GET_TODOS, TodosData } from '../Todos';
-
-const ADD_TODO = gql`
-  mutation addTodo($title: String!) {
-    addTodo(input: {
-      title: $title,
-    })
-    @rest(
-      method: "POST",
-      path: "todos/",
-      type: "Todo",
-    ) {
-      id
-      title
-    }
-  }
-`;
-
-interface Todo {
-  id: number;
-  title: string;
-}
-export interface AddTodoData {
-  addTodo: Todo;
-}
-
-export interface AddTodoInput {
-  title: String;
-}
+import {
+  AddTodoData,
+  AddTodoInput,
+  ADD_TODO,
+  GET_TODOS,
+  TodosData,
+} from '../../apis/todos';
 
 class AddTodoMutation extends Mutation<AddTodoData, AddTodoInput> {};
 
