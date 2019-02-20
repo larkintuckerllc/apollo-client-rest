@@ -37,6 +37,9 @@ const AddTodo = () => (
   <AddTodoMutation
     mutation={ADD_TODO}
     update={(cache, { data }) => {
+      if (data === undefined) {
+        return;
+      }
       console.log('UPDATE');
       console.log(data);
       /*
@@ -48,16 +51,13 @@ const AddTodo = () => (
       */
     }}
   >
-    {(addTodo, { data, error, loading }) => {
-      console.log(data);
-      return (
+    {(addTodo, { error, loading }) => (
         <AddTodoForm
           addTodo={addTodo}
           error={error !== undefined}
           loading={loading}
         />
-      );
-    }}
+    )}
   </AddTodoMutation>
 );
 
