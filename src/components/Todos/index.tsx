@@ -3,7 +3,7 @@ import React from 'react';
 import { Query, QueryResult } from 'react-apollo';
 import TodosView from './TodosView';
 
-const GET_TODOS = gql`
+export const GET_TODOS = gql`
   query {
     todos @rest(type: "Todo", path: "todos/") {
       id
@@ -12,7 +12,6 @@ const GET_TODOS = gql`
   }
 `;
 
-// TODO: CENTRALIZE
 interface Todo {
   id: number;
   title: string;

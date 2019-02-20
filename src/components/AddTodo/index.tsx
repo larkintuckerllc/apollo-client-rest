@@ -2,6 +2,7 @@ import gql from "graphql-tag";
 import React from 'react';
 import { Mutation } from "react-apollo";
 import AddTodoForm from './AddTodoForm';
+import { GET_TODOS, TodosData } from '../Todos';
 
 const ADD_TODO = gql`
   mutation addTodo($title: String!) {
@@ -41,14 +42,18 @@ const AddTodo = () => (
         return;
       }
       console.log('UPDATE');
-      console.log(data);
-      /*
-      const { todos } = cache.readQuery({ query: GET_TODOS });
+      const todosData = cache.readQuery<TodosData>({ query: GET_TODOS });
+      if (todosData === null) {
+        return;
+      }
+      const { todos } = todosData;
+      const { addTodo } = data;
+      console.log(todos);
+      console.log(addTodo);
       cache.writeQuery({
         query: GET_TODOS,
-        data: { todos: todos.concat([addTodo]) },
+        data: { todos: [...todos, addTodo] },
       });
-      */
     }}
   >
     {(addTodo, { error, loading }) => (
